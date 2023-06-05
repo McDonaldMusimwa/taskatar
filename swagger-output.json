@@ -1,0 +1,21 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "version": "1.0.0",
+    "title": "taskatorApi",
+    "description": "Taskater is a task management designed to ease the management of daily tasks and duties."
+  },
+  "host": "tasketor.onrender.com/",
+  "basePath": "",
+  "tags": [
+    {
+      "name": "",
+      "description": ""
+    }
+  ],
+  "schemes": [
+    "https"
+  ],
+  "securityDefinitions": {},
+  "paths": {}
+}
