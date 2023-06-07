@@ -4,11 +4,13 @@ const PORT =  8080
 const swaggerUi = require('swagger-ui-express');
 const swaggerDocument = require('./swagger-output.json')
 //database
-const mongoose = require('mongoose')
+const mongoose = require('mongoose');
+const bodyParser = require('body-parser');
 require("dotenv").config();
 const DATABASEURL = process.env.DATABASEURL;
 
 //routes
+app.use(bodyParser.json())
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument))
 app.use('/',require('./routes/index'))
 

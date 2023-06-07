@@ -5,13 +5,12 @@
   "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start":"node app.js",
-    "dev":"nodemon app.js",
-    "swagger":"node swagger.js",
+    "start": "node app.js",
+    "dev": "nodemon app.js",
+    "swagger": "node swagger.js",
     "lint": "eslint .",
     "lint:fix": "eslint --fix",
     "format": "prettier --write './**/*.{js,jsx,ts,tsx,css,md,json}' --config ./.prettierrc"
-
   },
   "author": "McDonald",
   "license": "ISC",
@@ -24,6 +23,7 @@
     "swagger-autogen": "^2.23.1"
   },
   "dependencies": {
+    "body-parser": "^1.20.2",
     "cors": "^2.8.5",
     "dotenv": "^16.1.4",
     "express": "^4.18.2",
@@ -32,6 +32,7 @@
     "mongoose": "^7.2.2",
     "passport": "^0.6.0",
     "passport-google-oauth2": "^0.2.0",
-    "swagger-ui-express": "^4.6.3"
+    "swagger-ui-express": "^4.6.3",
+    "validator": "^13.9.0"
   }
 }

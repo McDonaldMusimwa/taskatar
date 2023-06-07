@@ -26,7 +26,8 @@ Operations RESTApi for day to day tasks.
     "passport": "^0.6.0",  
     "passport-google-oauth2": "^0.2.0",  
     "supertest": "^6.3.3",  
-    "swagger-ui-express": "^4.3.0"  
+    "swagger-ui-express": "^4.3.0",
+    "validator":"^13.9.0"  
   },  
   "devDependencies": {  
     "eslint": "^8.10.0",  
@@ -50,7 +51,7 @@ type npm start
 
 
 ## Project Status
--deployed @   https://restaurant-f4ry.onrender.com/     
--api documentation and testing  @ https://restaurant-f4ry.onrender.com/api-docs     
+-deployed @   https://taskatar.onrender.com    
+-api documentation and testing  @ https://taskatar.onrender.com/api-docs     
 ### Project is: In development  
 
