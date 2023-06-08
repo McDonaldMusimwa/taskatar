@@ -23,7 +23,11 @@ const userSchema = new Schema({
     {
       title: String,
       description: String,
-      dateToDo: String,
+      dateToDo: Date,
+      time: {
+        type: String,
+        default: "00:00", // Set a default time if needed
+      },
       status: {
         type: String,
         enum: ["done", "not done", "in progress"],

@@ -11,6 +11,7 @@ const DATABASEURL = process.env.DATABASEURL;
 
 //routes
 app.use(bodyParser.json())
+app.use(express.json())
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument))
 app.use('/',require('./routes/index'))
 
