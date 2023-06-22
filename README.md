@@ -1,5 +1,5 @@
 
-# Node Js Application Programming Interface (Corrective action)
+# Node Js Application Programming Interface (Taskator)
 
 In summary, your REST API for taskator a REST API that streamlines the management of various tasks, activities, providing a flexible and scalable solution for enhancing productivity, improving timemanagement, and enabling smooth coordination of activities.  
 
@@ -27,7 +27,9 @@ Operations RESTApi for day to day tasks.
     "passport-google-oauth2": "^0.2.0",  
     "supertest": "^6.3.3",  
     "swagger-ui-express": "^4.3.0",
-    "validator":"^13.9.0"  
+    "validator":"^13.9.0",
+    "passport": "^0.6.0",  
+    "passport-google-oauth2": "^0.2.0",    
   },  
   "devDependencies": {  
     "eslint": "^8.10.0",  
