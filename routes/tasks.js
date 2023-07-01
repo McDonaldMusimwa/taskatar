@@ -3,10 +3,10 @@ const taskObject = require('../controller/tasks')
 
 
 router.post('/task/:userId',taskObject.createTask);
-router.get('/tasks/:userId',taskObject.getAllTasks);
-router.get('/user/:userId/task/:taskId',taskObject.getTask);
-router.patch('/user/:userId/task/:taskId',taskObject.modifyTask);
-router.delete('/user/:userId/task/:taskId',taskObject.deleteTask);
+router.get('/task/:userId',taskObject.getAllTasks);
+router.get('/task/:taskId',taskObject.getTask);
+router.patch('/task/:taskId',taskObject.modifyTask);
+router.delete('/task/:taskId',taskObject.deleteTask);
 
 
 

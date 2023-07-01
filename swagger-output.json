@@ -31,6 +31,9 @@
             "schema": {
               "type": "object",
               "properties": {
+                "password": {
+                  "example": "any"
+                },
                 "firstName": {
                   "example": "any"
                 },
@@ -38,9 +41,6 @@
                   "example": "any"
                 },
                 "email": {
-                  "example": "any"
-                },
-                "password": {
                   "example": "any"
                 }
               }
@@ -192,7 +192,13 @@
                 "dateToDo": {
                   "example": "any"
                 },
-                "time": {
+                "starttime": {
+                  "example": "any"
+                },
+                "endtime": {
+                  "example": "any"
+                },
+                "collaboration": {
                   "example": "any"
                 },
                 "status": {
@@ -206,16 +212,11 @@
           "201": {
             "description": "Created"
           },
-          "404": {
-            "description": "Not Found"
-          },
           "500": {
             "description": "Internal Server Error"
           }
         }
-      }
-    },
-    "/tasks/{userId}": {
+      },
       "get": {
         "tags": [
           "Task"
@@ -239,19 +240,13 @@
         }
       }
     },
-    "/user/{userId}/task/{taskId}": {
+    "/task/{taskId}": {
       "get": {
         "tags": [
           "Task"
         ],
         "description": "",
         "parameters": [
-          {
-            "name": "userId",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
           {
             "name": "taskId",
             "in": "path",
@@ -278,12 +273,6 @@
         "description": "",
         "parameters": [
           {
-            "name": "userId",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
-          {
             "name": "taskId",
             "in": "path",
             "required": true,
@@ -304,7 +293,13 @@
                 "dateToDo": {
                   "example": "any"
                 },
-                "time": {
+                "starttime": {
+                  "example": "any"
+                },
+                "endtime": {
+                  "example": "any"
+                },
+                "collaboration": {
                   "example": "any"
                 },
                 "status": {
@@ -333,12 +328,6 @@
         "description": "",
         "parameters": [
           {
-            "name": "userId",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
-          {
             "name": "taskId",
             "in": "path",
             "required": true,
@@ -349,13 +338,54 @@
           "200": {
             "description": "OK"
           },
-          "404": {
-            "description": "Not Found"
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/auth/login": {
+      "post": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "email": {
+                  "example": "any"
+                },
+                "password": {
+                  "example": "any"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
           },
           "500": {
             "description": "Internal Server Error"
           }
         }
+      }
+    },
+    "/auth/google": {
+      "get": {
+        "description": "",
+        "parameters": [],
+        "responses": {}
+      }
+    },
+    "/auth/google/redirect": {
+      "get": {
+        "description": "",
+        "parameters": [],
+        "responses": {}
       }
     }
   }

@@ -1,17 +1,21 @@
 const mongoose = require("mongoose");
 const Schema = require("../models/user");
+const bcrypt = require('bcrypt')
 
 module.exports = {
   createUser: async (req, res) => {
     //#swagger.tags=['User']
+    const hashedPassword = await bcrypt.hash(req.body.password,10)
     try {
+      
       const newuser = {
         firstName: req.body.firstName,
         lastName: req.body.lastName,
         email: req.body.email,
-        password: req.body.password,
+        password:hashedPassword 
       };
-
+      console.log(req.body)
+      
       const User = new Schema.User(newuser);
       const createdUser = await User.save();
       res.status(200).json({ success: "creted sussesfully" });

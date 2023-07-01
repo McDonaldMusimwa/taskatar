@@ -1,33 +1,32 @@
-const Schema = require("../models/user");
+const { ObjectId } = require("mongoose");
+const Schema = require("../models/task");
 
 module.exports = {
   createTask: async (req, res) => {
     //#swagger.tags=['Task']
 
+    //extract user
+    const userId = req.params.userId;
     try {
-      const userId = req.params.userId;
-
-      // Retrieve the user by their ID
-      const user = await Schema.User.findById({ _id: userId });
-      if (!user) {
-        return res.status(404).json({ error: "User not found" });
-      }
       // Create a new task
       const newTask = {
+        owener: userId,
         title: req.body.title,
         description: req.body.description,
         dateToDo: req.body.dateToDo,
-        time: req.body.time,
+        starttime: req.body.starttime,
+        endtime: req.body.endtime,
+        collaboration: req.body.collaboration,
         status: req.body.status,
       };
-
+      console.log(req.body);
       // Add the new task to the user's tasks array
-      user.tasks.push(newTask);
 
       // Save the updated user
-      await user.save();
-
+      const newtask = new Schema.Task(newTask);
+      const savedtask = await newtask.save();
       res.status(201).json({ success: "Task created successfully" });
+      return { ...savedtask._doc, _id: savedtask.toString() };
     } catch (error) {
       res.status(500).json({ error: error.message || "Failed to create task" });
     }
@@ -38,10 +37,8 @@ module.exports = {
       const userId = req.params.userId;
 
       // Retrieve the user by their ID
-      const user = await Schema.User.findById(userId);
+      const tasks = await Schema.Task.find({ owener: userId });
 
-      // Add the new task to the user's tasks array
-      const tasks = user.tasks;
       const formattedTasks = tasks.map((task) => {
         return { ...task._doc, _id: task._id.toString() };
       });
@@ -52,20 +49,14 @@ module.exports = {
   },
   getTask: async (req, res) => {
     //#swagger.tags=['Task']
+
+    const taskId = req.params.taskId;
     try {
-      const taskId = req.params.taskId;
-      const userId = req.params.userId;
-
       // Retrieve the user by their ID
-      const user = await Schema.User.findById({ _id: userId });
-
-      if (!userId) {
-        return res.status(404).json({ error: "User not found" });
-      }
-      const task = user.tasks.find((task) => task._id.toString() === taskId);
+      const task = await Schema.Task.findOne({ _id: ObjectId(taskId) });
 
       if (!task) {
-        return res.status(404).json({ error: "Task not found" });
+        return res.status(404).json({ error: "task not found" });
       }
 
       res.status(200).json({ ...task._doc, _id: task._id.toString() });
@@ -77,15 +68,16 @@ module.exports = {
   },
   modifyTask: async (req, res) => {
     //#swagger.tags=['Task']
+
+    const taskId = req.params.taskId;
+
     try {
-      const taskId = req.params.taskId;
-      const userId = req.params.userId;
+      // Retrieve the task by id
+      const task = await Schema.Task.findById(taskId.trim());
 
-      // Retrieve the user by their ID
-      const user = await Schema.User.findById({ _id: userId });
-
-      if (!userId) {
-        return res.status(404).json({ error: "User not found" });
+      console.log(task);
+      if (!task) {
+        return res.status(404).json({ error: "Task not found" });
       }
 
       //extract task from request
@@ -93,23 +85,23 @@ module.exports = {
         title: req.body.title,
         description: req.body.description,
         dateToDo: req.body.dateToDo,
-        time: req.body.time,
+        starttime: req.body.starttime,
+        endtime: req.body.endtime,
+        collaboration: req.body.collaboration,
         status: req.body.status,
       };
-      //retrive task
-      const task = user.tasks.find((task) => task._id.toString() === taskId);
-      if (!task) {
-        return res.status(404).json({ error: "Task not found" });
-      }
+
       //update task
       task.title = modifiedtask.title;
       task.description = modifiedtask.description;
       task.dateToDo = modifiedtask.dateToDo;
-      task.time = modifiedtask.time;
+      task.starttime = modifiedtask.starttime;
+      task.endtime = modifiedtask.endtime;
+      task.collaboration = modifiedtask.collaboration;
       task.status = modifiedtask.status;
 
       //save change
-      await user.save();
+      await task.save();
 
       res.status(200).json({ ...task._doc, _id: task._id.toString() });
     } catch (error) {
@@ -118,33 +110,16 @@ module.exports = {
         .json({ error: error.message || "Failed to retrieve task" });
     }
   },
+
   deleteTask: async (req, res) => {
     //#swagger.tags=['Task']
     try {
       const taskId = req.params.taskId;
-      const userId = req.params.userId;
+      //const userId = req.params.userId;
 
       // Retrieve the user by their ID
-      const user = await Schema.User.findById({ _id: userId });
 
-      if (!userId) {
-        return res.status(404).json({ error: "User not found" });
-      }
-
-      // Find the index of the task in the tasks array
-      const taskIndex = user.tasks.findIndex(
-        (task) => task._id.toString() === taskId
-      );
-
-      if (taskIndex === -1) {
-        return res.status(404).json({ error: "Task not found" });
-      }
-
-      // Remove the task from the tasks array
-      user.tasks.splice(taskIndex, 1);
-
-      // Save the updated user object
-      await user.save();
+      const task = await Schema.Task.deleteOne({ _id: taskId.trim() });
 
       res.status(200).json({ success: "Task deleted" });
     } catch (error) {
